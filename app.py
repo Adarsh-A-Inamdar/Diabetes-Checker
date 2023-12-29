@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify
-from diabetes import load_diabetes_model, predict_diabetes
+from module.diabetes import load_diabetes_model, predict_diabetes
 
 app = Flask(__name__)
 
