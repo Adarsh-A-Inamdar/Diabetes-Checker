@@ -1,16 +1,40 @@
-import joblib
 import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, classification_report
 
-def load_diabetes_model():
-    # Load the machine learning model
-    model = joblib.load('model/diabetes_model.pkl')  # Adjust the filename accordingly
-    return model
+# Load the diabetes dataset (you can replace it with your own dataset)
+url = "https://raw.githubusercontent.com/jbrownlee/Datasets/master/pima-indians-diabetes.data.csv"
+names = ['preg', 'plas', 'pres', 'skin', 'test', 'mass', 'pedi', 'age', 'class']
+dataset = pd.read_csv(url, names=names)
 
-def predict_diabetes(features, model):
-    # Ensure that the features are in the same order as in your training data
-    features_array = np.array(features).reshape(1, -1)
-    
-    # Make a prediction
-    prediction = model.predict(features_array)[0]
+# Display the first few rows of the dataset
+print(dataset.head())
 
-    return prediction
+# Separate features and target variable
+X = dataset.iloc[:, :-1]
+y = dataset.iloc[:, -1]
+
+# Split the dataset into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Standardize the features
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
+# Build a RandomForestClassifier (you can try other classifiers as well)
+model = RandomForestClassifier(n_estimators=100, random_state=42)
+model.fit(X_train, y_train)
+
+# Make predictions on the test set
+y_pred = model.predict(X_test)
+
+# Evaluate the model
+accuracy = accuracy_score(y_test, y_pred)
+classification_rep = classification_report(y_test, y_pred)
+
+print(f"Accuracy: {accuracy}")
+print("Classification Report:\n", classification_rep)
