@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diabetes Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+</head>
+<body>
+
+<div class="container">
+    <h1>Diabetes Prediction</h1>
+    <form id="diabetesForm">
+        <!-- Input fields for user -->
+        <label for="preg">Number of Pregnancies:</label>
+        <input type="number" id="preg" name="preg" required>
+
+        <!-- ... Add input fields for other features ... -->
+
+        <button type="button" onclick="predictDiabetes()">Predict</button>
+    </form>
+
+    <div id="result"></div>
+</div>
+
+</body>
+</html>
